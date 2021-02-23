@@ -16,9 +16,9 @@ define( 'DB_NAME',     'wordpressdb' );
 define( 'DB_USER',     'b0n3' );
 define( 'DB_PASSWORD', 'admin' );
 define( 'DB_CHARSET',  'utf8mb4' );
-define( 'DB_HOST', 'mysql-service' );
-define('WP_HOME', 'http://TOCHANGE_IP:5050' );
-define('WP_SITEURL', 'http://TOCHANGE_IP:5050' );
+define( 'DB_HOST', '192.168.99.116');
+define('WP_HOME', 'http://192.168.99.116:5050' );
+define('WP_SITEURL', 'http://192.168.99.116:5050' );
 
 /* MySQL database table prefix. */
 $table_prefix = 'wp_';

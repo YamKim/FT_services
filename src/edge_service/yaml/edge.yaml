@@ -6,7 +6,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: shared
 spec:
   selector:
-    app: edge-service
+    app: edge-app
   type: LoadBalancer
   ports:
   - port: 443
@@ -22,19 +22,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  edge-service
+  name:  edge-deployment
 spec:
   selector:
     matchLabels:
-      app:  edge-service
+      app:  edge-app
   template:
     metadata:
       labels:
-        app:  edge-service
+        app:  edge-app
     spec:
       containers:
       - name: edge-container
-        image: edge-service
+        image: edge-image
         imagePullPolicy: Never
         ports:
         - containerPort: 443
@@ -43,49 +43,3 @@ spec:
           name: http
         - containerPort: 22
           name: ssh
---- 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: nginx-app
-# spec:
-#   selector:
-#     matchLabels:
-#       app: nginx-app
-#   template:
-#     metadata:
-#       labels:
-#         app: nginx-app
-#     spec:
-#       containers:
-#       - name: nginx-container
-#         image: x_nginx
-#         imagePullPolicy: Never
-#         ports:
-#         - containerPort: 443
-#           name: https
-#         - containerPort: 80
-#           name: http
-#         - containerPort: 22
-#           name: ssh
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: nginx-service
-#   annotations:
-#     metallb.universe.tf/allow-shared-ip: shared
-# spec:
-#   selector:
-#     app: nginx-app
-#   type: LoadBalancer
-#   ports:
-#   - port: 443
-#     targetPort: 443
-#     name: https
-#   - port: 80
-#     targetPort: 80
-#     name: http
-#   - port: 22
-#     targetPort: 22
-#     name: ssh
