@@ -12,8 +12,7 @@ rc-status; \
 service mariadb start; 
 
 COPY	./src/* /
-#COPY ./src/wordpress.sql  .
+
 
 RUN  sh /setup_mysql.sh
 ENTRYPOINT ["/bin/sh", "/entry_point.sh" ]
-#ENTRYPOINT ["/bin/sh"]

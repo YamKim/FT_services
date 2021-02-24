@@ -15,7 +15,7 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && rm -rf /var/cache/apk/*
 
 # We copy wordpress database config file
-#COPY ./src/wp-config.php /www/wp-config.php
+COPY ./src/wp-config.php /www/wp-config.php
 
 #save  cluster IP
 RUN echo $IP > clusterip.txt
@@ -25,7 +25,9 @@ RUN cat clusterip.txt
 # RUN mkdir -p /etc/telegraf
 # COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
+RUN apk --no-cache add nginx
 
+COPY ./src/nginx.conf /etc/nginx/nginx.conf
 COPY ./src/start.sh .
 RUN chmod +x start.sh
 EXPOSE 5050

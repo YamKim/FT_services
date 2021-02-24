@@ -28,7 +28,7 @@ minikube start --cpus=4 --memory='4g'
 
 print_green "enable minikube dashbord"
 enable_addons dashboard
-minikube dashbord &
+
 
 print_green "menable minikube metallb"
 enable_addons  metallb
@@ -58,12 +58,11 @@ docker build ./src/db/ -t mysql-db-image
 print_green "build wordpress image"
 docker build --build-arg IP=$LIP ./src/wordpress/ -t wordpress-image
 
+print_green "build php my admin  image"
+docker build ./src/pma -t php-my-admin-image 
 
-
-
-
-
-
+print_green "build  influxdb image"
+docker build ./src/influxdb/ -t influxdb-image
 
 print_green "deploy edge_service"
 
@@ -75,7 +74,14 @@ kubectl apply -f ./src/db/yaml/
 print_green "deploy wordpress"
 kubectl apply -f ./src/wordpress/yaml/
 
+print_green "deploy php my admin"
+kubectl apply -f src/pma/yaml
+
+print_green "deploy influxdb"
+kubectl apply -f ./src/influxdb/yaml 
 # change config  files to MINIKUBEIP
 sed -i -e "s/$LIP/MINIKUBIP/g" ./src/loadBalancer/metallb-config.yaml
 
 sed -i -e "s/$LIP/TOCHANGE_IP/g" ./src/edge_service/srcs/nginx.conf
+
+minikube dashboard &

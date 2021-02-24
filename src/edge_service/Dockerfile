@@ -25,7 +25,8 @@ RUN rm /etc/nginx/nginx.conf
 COPY ./srcs/nginx.conf /etc/nginx/nginx.conf
 
 COPY ./srcs/setup.sh .
-RUN chmod +x /setup.sh
+RUN chmod +x /setup.sh; apk add sudo 
+
 
 EXPOSE 443 80 22
 
