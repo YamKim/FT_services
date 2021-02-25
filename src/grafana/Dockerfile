@@ -9,4 +9,7 @@ RUN tar -zxvf grafana-7.4.3.linux-amd64.tar.gz
 RUN  mv grafana-7.4.3 /usr/share/grafana
 RUN  mkdir -p /var/lib/grafana/dashboards
 COPY ./src/grafana.db /usr/share/grafana/data/
-ENTRYPOINT  [ "/bin/sh" ]
+COPY ./src/start.sh .
+ENV GF_SECURITY_ADMIN_PASSWORD=secret
+
+ENTRYPOINT  [ "/bin/sh","start.sh" ]

@@ -64,6 +64,9 @@ docker build ./src/pma -t php-my-admin-image
 print_green "build  influxdb image"
 docker build ./src/influxdb/ -t influxdb-image
 
+print_green "build grafana image"
+docker build ./src/grafana/ -t grafana-image
+
 print_green "deploy edge_service"
 
 kubectl apply -f ./src/edge_service/yaml/
@@ -79,6 +82,9 @@ kubectl apply -f src/pma/yaml
 
 print_green "deploy influxdb"
 kubectl apply -f ./src/influxdb/yaml 
+
+print_green "deploy grafana"
+kubectl apply -f ./src/grafana/yaml
 # change config  files to MINIKUBEIP
 sed -i -e "s/$LIP/MINIKUBIP/g" ./src/loadBalancer/metallb-config.yaml
 
