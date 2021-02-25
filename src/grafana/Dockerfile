@@ -8,8 +8,8 @@ RUN wget https://dl.grafana.com/oss/release/grafana-7.4.3.linux-amd64.tar.gz
 RUN tar -zxvf grafana-7.4.3.linux-amd64.tar.gz
 RUN  mv grafana-7.4.3 /usr/share/grafana
 RUN  mkdir -p /var/lib/grafana/dashboards
-COPY ./src/grafana.db /usr/share/grafana/data/
+#COPY ./src/grafana.db /usr/share/grafana/data/
 COPY ./src/start.sh .
-ENV GF_SECURITY_ADMIN_PASSWORD=secret
+#ENV GF_SECURITY_ADMIN_PASSWORD=secret
 
 ENTRYPOINT  [ "/bin/sh","start.sh" ]
