@@ -45,6 +45,7 @@ LIP=${IP%.*}.200
 echo $LIP
 sed -i -e "s/MINIKUBIP/$LIP/g" ./src/loadBalancer/metallb-config.yaml
 sed -i -e "s/TOCHANGE_IP/$LIP/g" ./src/edge_service/srcs/nginx.conf
+sed -i -e "s/TOCHANGE_IP/$LIP/g" ./src/ftps/src/ftps.conf
 printf $IP
 cat ./src/loadBalancer/metallb-config.yaml
 
@@ -66,6 +67,8 @@ docker build ./src/influxdb/ -t influxdb-image
 
 print_green "build grafana image"
 docker build ./src/grafana/ -t grafana-image
+print_green "build ftps image"
+docker build ./src/ftps/ -t ftps-image
 
 print_green "deploy edge_service"
 
@@ -85,9 +88,12 @@ kubectl apply -f ./src/influxdb/yaml
 
 print_green "deploy grafana"
 kubectl apply -f ./src/grafana/yaml
+print_green "deploy ftps"
+kubectl apply -f ./src/ftps/yaml/
 # change config  files to MINIKUBEIP
 sed -i -e "s/$LIP/MINIKUBIP/g" ./src/loadBalancer/metallb-config.yaml
 
 sed -i -e "s/$LIP/TOCHANGE_IP/g" ./src/edge_service/srcs/nginx.conf
+ sed -i -e "s/$LIP/TOCHANGE_IP/g"     ./src/ftps/src/ftps.conf
 
 minikube dashboard &

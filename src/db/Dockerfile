@@ -15,4 +15,5 @@ COPY	./src/* /
 
 
 RUN  sh /setup_mysql.sh
+
 ENTRYPOINT ["/bin/sh", "/entry_point.sh" ]

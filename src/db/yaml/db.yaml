@@ -27,7 +27,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  mysql-db-deployment
+  name:  mysql
 spec:
   selector:
     matchLabels:
@@ -41,6 +41,13 @@ spec:
       - name: mysql-db-container
         image: mysql-db-image
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+             - sh
+             - /health.sh
+          initialDelaySeconds: 30
+          periodSeconds: 5
         ports:
         - containerPort: 3306
           name: mysql
